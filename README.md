@@ -17,9 +17,10 @@ There are other techniques which can reduce overfitting, even when we have a fix
 
 This is the most commonly used regularisation techinques, sometimes also called as **weight decay**.<br />
 
+### Regularisation of loss function :
+
 Let us discuss how cost is regularised using this L2 Regularisation. We know that cross_entropy cost is 
 
-### Regularisation of loss function :
 <code>C = −1/n∑[y<sub>j</sub>lna<sub>j</sub>+(1−y<sub>j</sub>)ln(1−a<sub>j</sub>)]</code>
 
 The idea behind L2 regularization is to add an extra term to the cost function, a term called the regularization term.
