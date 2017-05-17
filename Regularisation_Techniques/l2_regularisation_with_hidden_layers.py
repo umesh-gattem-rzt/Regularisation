@@ -25,16 +25,22 @@ x = tf.placeholder(shape=[None, 4], dtype=tf.float32)
 y = tf.placeholder(shape=[None, 1], dtype=tf.float32)
 
 weights = {
-    'wout': tf.Variable(tf.random_uniform([4, 1], minval=-1, maxval=1), dtype=tf.float32)
+    'w1': tf.Variable(tf.random_uniform([4, 6], minval=-1, maxval=1), dtype=tf.float32),
+    'w2': tf.Variable(tf.random_uniform([6, 3], minval=-1, maxval=1), dtype=tf.float32),
+    'wout': tf.Variable(tf.random_uniform([3, 1], minval=-1, maxval=1), dtype=tf.float32)
 }
 
 bias = {
+    'b1': tf.Variable(tf.zeros([6]), dtype=tf.float32),
+    'b2': tf.Variable(tf.zeros([3]), dtype=tf.float32),
     'bout': tf.Variable(tf.zeros([1]), dtype=tf.float32)
 }
 
 
 def model(x, weights, bias):
-    return tf.sigmoid(tf.add(tf.matmul(x, weights['wout']), bias['bout']))
+    layer1 = tf.sigmoid(tf.add(tf.matmul(x, weights['w1']), bias['b1']))
+    layer2 = tf.sigmoid(tf.add(tf.matmul(layer1, weights['w2']), bias['b2']))
+    return tf.sigmoid(tf.add(tf.matmul(layer2, weights['wout']), bias['bout']))
 
 
 pred = model(x, weights, bias)
@@ -43,10 +49,10 @@ pred = model(x, weights, bias)
 cost = tf.reduce_mean(tf.square(y - pred))
 
 # Loss function using L2 Regularization
-regularizer = tf.nn.l2_loss(weights['wout'])
+regularizer = tf.nn.l2_loss(weights['wout']) + tf.nn.l2_loss(weights['w1']) + tf.nn.l2_loss(weights['w2'])
 loss = tf.reduce_mean(cost + beta * regularizer)
 
-# optimizer
+# optimiser
 optimizer = tf.train.AdamOptimizer(learning_rate).minimize(loss)
 
 # accuracy
@@ -60,5 +66,5 @@ with tf.Session() as sess:
     for i in range(epoch):
         _, c, p, acc = sess.run([optimizer, loss, pred, accuracy], feed_dict={x: train_data, y: train_label})
         if i % display_step == 0:
-            print('Epoch: ', i, ' Cost:', c, 'Accuracy:', acc)
+            print('Epoch: ', i, ' Cost', c, "accuracy", acc)
     print("Testing Accuracy:", sess.run(accuracy, feed_dict={x: test_data, y: test_label}))
