@@ -21,12 +21,12 @@ This is the most commonly used regularisation techinques, sometimes also called 
 
 Let us discuss how cost is regularised using this L2 Regularisation. We know that cross_entropy cost is 
 
-<code>C = −1/n∑[y<sub>j</sub>lna<sub>j</sub>+(1−y<sub>j</sub>)ln(1−a<sub>j</sub>)]</code>
+<code>C = −1/n∑[y<sub>j</sub>lna<sub>j</sub> + (1−y<sub>j</sub>)ln(1−a<sub>j</sub>)]</code>
 
 The idea behind L2 regularization is to add an extra term to the cost function, a term called the regularization term.
 So after adding regularisation term the cross_entropy cost is given as
 
-<code>C=−1/n∑[y<sub>j</sub>lna<sub>j</sub>+(1−y<sub>j</sub>)ln(1−a<sub>j</sub>)] + λ/2n∑w<sup>2</sup></code>
+<code>C=−1/n∑[y<sub>j</sub>lna<sub>j</sub> + (1−y<sub>j</sub>)ln(1−a<sub>j</sub>)] + λ/2n∑w<sup>2</sup></code>
 
 The first term is just the usual expression for the cross-entropy. But we've added a second term, namely the sum of the squares of all the weights in the network. This is scaled by a factor λ/2n, where λ>0 is known as the regularization parameter, and n is, as usual, the size of our training set.
 
