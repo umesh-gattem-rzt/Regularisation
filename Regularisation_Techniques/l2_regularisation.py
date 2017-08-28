@@ -17,7 +17,7 @@ train_data, train_label, valid_data, valid_label, test_data, test_label = read_c
                                                                                    normalize=False,
                                                                                    randomize=True)
 learning_rate = 0.01
-epoch = 100
+epoch = 150
 display_step = 1
 beta = 0.01  # Regularisation parameter
 
